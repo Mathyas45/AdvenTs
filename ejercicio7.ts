@@ -29,20 +29,25 @@
 //"abcighfedjk"
 
 
-fixPackages('a(b(c))e')
+console.log(fixPackages('a(b(c))e'));
 // // ➞ "acbe"
 // // 1º volteamos "c" → "c", luego "bc" → "cb"
-
 function fixPackages(packages: string): string {
-    // Code here 
-    let dimensionPackages = packages.length
-    if(dimensionPackages === 0){
-        return ''
-    }
-    if(packages.includes('(')){
-        let reverse = packages.split('').reverse().join('').replace(/[^a-zA-Z]/g, '')
-        console.log(reverse)
-    }
-    return ''
+    // Mientras haya paréntesis en la cadena
+    while (packages.includes('(')) {
+        // Encuentra el último paréntesis abierto y su par cerrado
+        const lastOpen = packages.lastIndexOf('('); // Paréntesis más interno
+        const firstClose = packages.indexOf(')', lastOpen); // Cerrando el paréntesis interno, last open es el índice de la última aparición de '('
 
-  }
+        // Extrae el contenido entre los paréntesis
+        const palabras = packages.substring(lastOpen + 1, firstClose);
+
+        // Invierte el contenido
+        const reversed = palabras.split('').reverse().join(''); // split convierte el string en un array de caracteres, reverse invierte el array y join lo convierte en un string de nuevo
+
+        // Reconstruye la cadena reemplazando los paréntesis y el contenido procesado
+        packages = packages.substring(0, lastOpen) + reversed + packages.substring(firstClose + 1);// substring devuelve una parte de la cadena original entre los índices especificados, 
+    }
+
+    return packages;
+}
