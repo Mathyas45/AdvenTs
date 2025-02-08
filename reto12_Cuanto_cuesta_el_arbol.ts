@@ -26,9 +26,26 @@ calculatePrice('#@Z')  // undefined (Z es desconocido)
 
 
 function calculatePrice(ornaments: string): number {
+    let copo_nieve = 1
+    let bola_navidad = 5
+    let arbolito_decorativo = 10
+    let guirnalda_brillante = 50
+    let estrella_polar = 100
+    let total = 0
+    
     if(ornaments.includes('Z')){
         return 0
     }
+    for(let i = 0; i < ornaments.length; i++){
+        if(ornaments[i] === '*'){
+            total += copo_nieve
+        }else if(ornaments[i] === 'o'){
+            total += bola_navidad
+        }else if(ornaments[i] === '^'){
+            total += arbolito_decorativo
+        }
+        
+        
     // Code here
 
     return 0
