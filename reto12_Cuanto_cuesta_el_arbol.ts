@@ -22,7 +22,7 @@
 // calculatePrice('*#')   // 49  (-1 + 50)
 // calculatePrice('@@@')  // 300 (100 + 100 + 100)
 // calculatePrice('#@')   // 50  (-50 + 100)
-calculatePrice('#@Z')  // undefined (Z es desconocido)
+console.log(calculatePrice('#**'))  // undefined (Z es desconocido)
 
 
 function calculatePrice(ornaments: string): number {
@@ -43,10 +43,32 @@ function calculatePrice(ornaments: string): number {
             total += bola_navidad
         }else if(ornaments[i] === '^'){
             total += arbolito_decorativo
+        }else if(ornaments[i] === '#'){
+            total += guirnalda_brillante
+        }else if(ornaments[i] === '@'){
+            total += estrella_polar
         }
-        
-        
-    // Code here
-
-    return 0
-  }
+        if(i > 0){
+            if(ornaments[i] === '#' && ornaments[i-1] === '@'){
+                total -= estrella_polar
+            }else if(ornaments[i] === '^' && (ornaments[i-1] ===  '#' || ornaments[i-1] === '@')){
+                total -= bola_navidad
+            }else if(ornaments[i] === 'o' && (ornaments[i-1] === '^' || ornaments[i-1] === '#' || ornaments[i-1] === '@')){
+                total -= arbolito_decorativo
+            }else if(ornaments[i] === '*' && (ornaments[i-1] === 'o' || ornaments[i-1] === '^' || ornaments[i-1] === '#' || ornaments[i-1] === '@')){
+                total -= bola_navidad
+            }
+        }else{
+            if(ornaments[i] === 'o' && ornaments[i+1] === '*'){
+                total -= bola_navidad
+            }else if(ornaments[i] === '^' && (ornaments[i+1] === '*' || ornaments[i+1] === 'o')){
+                total -= arbolito_decorativo
+            }else if (ornaments[i] === '#' && (ornaments[i+1] === '*' || ornaments[i+1] == '^' || ornaments[i+1] === 'o') ){
+                total -= guirnalda_brillante
+            }else if(ornaments[i] === '@' && (ornaments[i+1] === '*' || ornaments[i+1] == '^' || ornaments[i+1] === 'o' || ornaments[i+1] === '#')){
+                total -= estrella_polar
+            }
+        }
+    }
+    return total
+}
